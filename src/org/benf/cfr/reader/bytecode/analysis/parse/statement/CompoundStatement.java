@@ -33,11 +33,15 @@ public class CompoundStatement extends AbstractStatement {
 
     @Override
     public Dumper dump(Dumper dumper) {
-        dumper.separator("{").newln();
-        for (Statement statement : statements) {
-            statement.dump(dumper);
+        if (!statements.isEmpty()) {
+            dumper.separator("{").newln();
+            for (Statement statement : statements) {
+                statement.dump(dumper);
+            }
+            dumper.separator("}").newln();
+        } else {
+            dumper.print("{ }").newln();
         }
-        dumper.separator("}").newln();
         return dumper;
     }
 

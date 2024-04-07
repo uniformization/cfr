@@ -264,7 +264,6 @@ class Driver {
 
                 c.dump(d);
                 d.newln();
-                d.newln();
                 if (lomem) {
                     c.releaseCode();
                 }
