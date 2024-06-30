@@ -29,12 +29,12 @@ public class ClassFileDumperNormal extends AbstractClassFileDumper {
 
         d.keyword("class ");
         c.dumpClassIdentity(d);
-        d.newln();
 
         ClassSignature signature = c.getClassSignature();
         JavaTypeInstance superClass = signature.getSuperClass();
         if (superClass != null) {
             if (!superClass.getRawName().equals(TypeConstants.objectName)) {
+                d.print(" ");
                 d.keyword("extends ").dump(superClass).newln();
             }
         }

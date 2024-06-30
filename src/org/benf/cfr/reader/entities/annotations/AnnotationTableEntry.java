@@ -36,11 +36,18 @@ public class AnnotationTableEntry implements TypeUsageCollectable {
         d.print('@').dump(clazz);
         if (elementValueMap != null && !elementValueMap.isEmpty()) {
             d.print('(');
-            boolean first = true;
-            for (Map.Entry<String, ElementValue> elementValueEntry : elementValueMap.entrySet()) {
-                first = StringUtils.comma(first, d);
-                d.print(elementValueEntry.getKey()).print('=');
-                elementValueEntry.getValue().dump(d);
+            if (elementValueMap.entrySet().size() == 1) {
+                Map.Entry<String, ElementValue> first = elementValueMap.entrySet().iterator().next();
+                if (first.getKey().equals("value")) {
+                    first.getValue().dump(d);
+                }
+            } else {
+                boolean first = true;
+                for (Map.Entry<String, ElementValue> elementValueEntry : elementValueMap.entrySet()) {
+                    first = StringUtils.comma(first, d);
+                    d.print(elementValueEntry.getKey()).print(" = ");
+                    elementValueEntry.getValue().dump(d);
+                }
             }
             d.print(')');
         }

@@ -29,18 +29,18 @@ public class ClassFileDumperInterface extends AbstractClassFileDumper {
 
         d.print("interface ");
         c.dumpClassIdentity(d);
-        d.newln();
 
         ClassSignature signature = c.getClassSignature();
         List<JavaTypeInstance> interfaces = signature.getInterfaces();
         if (!interfaces.isEmpty()) {
-            d.print("extends ");
+            d.print(" extends ");
             int size = interfaces.size();
             for (int x = 0; x < size; ++x) {
                 JavaTypeInstance iface = interfaces.get(x);
-                d.dump(iface).print((x < (size - 1) ? "," : "")).newln();
+                d.dump(iface).print((x < (size - 1) ? "," : ""));
             }
         }
+        d.newln();
         c.dumpPermitted(d);
         d.removePendingCarriageReturn().print(" ");
     }

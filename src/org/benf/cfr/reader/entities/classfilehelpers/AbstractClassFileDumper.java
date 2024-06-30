@@ -60,9 +60,9 @@ abstract class AbstractClassFileDumper implements ClassFileDumper {
         }
         header += '.';
 
-        d.beginBlockComment(false);
-        d.print(header).newln();
         if (options.getOption(OptionsImpl.DECOMPILER_COMMENTS)) {
+            d.beginBlockComment(false);
+            //d.print(header).newln();
             TypeUsageInformation typeUsageInformation = d.getTypeUsageInformation();
             List<JavaTypeInstance> couldNotLoad = ListFactory.newList();
             for (JavaTypeInstance type : typeUsageInformation.getUsedClassTypes()) {
@@ -84,8 +84,8 @@ abstract class AbstractClassFileDumper implements ClassFileDumper {
                     d.print(" ").print(type.getRawName()).newln();
                 }
             }
+            d.endBlockComment();
         }
-        d.endBlockComment();
         // package name may be empty, in which case it's ignored by dumper.
         if (showPackage) {
             d.packageName(classFile.getRefClassType());
@@ -95,6 +95,7 @@ abstract class AbstractClassFileDumper implements ClassFileDumper {
     protected void dumpImplements(Dumper d, ClassSignature signature) {
         List<JavaTypeInstance> interfaces = signature.getInterfaces();
         if (!interfaces.isEmpty()) {
+            d.print(" ");
             d.keyword("implements ");
             int size = interfaces.size();
             for (int x = 0; x < size; ++x) {
