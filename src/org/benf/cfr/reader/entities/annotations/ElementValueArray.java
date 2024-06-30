@@ -17,13 +17,17 @@ public class ElementValueArray implements ElementValue {
     @Override
     public Dumper dump(Dumper d) {
         if (!content.isEmpty()) {
-            d.print('{');
-            boolean first = true;
-            for (ElementValue value : content) {
-                first = StringUtils.comma(first, d);
-                value.dump(d);
+            if (content.size() == 1) {
+                content.iterator().next().dump(d);
+            } else {
+                d.print('{');
+                boolean first = true;
+                for (ElementValue value : content) {
+                    first = StringUtils.comma(first, d);
+                    value.dump(d);
+                }
+                d.print('}');
             }
-            d.print('}');
         } else {
             d.print("{ }");
         }
